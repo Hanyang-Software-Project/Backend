@@ -13,7 +13,7 @@ public class SoundData {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "sound_data_id")
-    private Integer soundDataId;
+    private Long soundDataId;
 
     @Column(name = "analysis_result", columnDefinition = "JSON")
     private String analysisResult;

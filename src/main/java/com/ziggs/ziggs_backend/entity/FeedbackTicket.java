@@ -13,7 +13,7 @@ public class FeedbackTicket {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ticket_id")
-    private Integer ticketId;
+    private Long ticketId;
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
