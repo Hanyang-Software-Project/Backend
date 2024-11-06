@@ -13,7 +13,7 @@ public class Alert {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "alert_id")
-    private Integer alertId;
+    private Long alertId;
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
