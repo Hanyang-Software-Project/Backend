@@ -1,8 +1,8 @@
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/ziggs_db
-    username: postgres
-    password: 1234
+    url: jdbc:postgresql://localhost:5433/ziggs_db
+    username: ziggs
+    password: ziggs
     driver-class-name: org.postgresql.Driver
   jpa:
     hibernate:
