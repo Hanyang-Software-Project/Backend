@@ -1,11 +1,8 @@
 package com.ziggs.ziggs_backend.service;
 
-import com.ziggs.ziggs_backend.entity.Notification;
-import com.ziggs.ziggs_backend.entity.SoundData;
 import com.ziggs.ziggs_backend.entity.User;
-import com.ziggs.ziggs_backend.repository.NotificationRepository;
-import com.ziggs.ziggs_backend.repository.SoundDataRepository;
 import com.ziggs.ziggs_backend.repository.UserRepository;
+import com.ziggs.ziggs_backend.security.PasswordHasher;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -33,8 +30,20 @@ public class UserService {
         if (userRepository.existsByUsername(user.getUsername())) {
             throw new IllegalArgumentException("Username already exists.");
         }
+
+        String hashedPassword = PasswordHasher.hashPassword(user.getPasswordHash());
+        user.setPasswordHash(hashedPassword);
+
         return userRepository.save(user);
     }
+
+    public boolean verifyUserCredentials(String email, String rawPassword) {
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new IllegalArgumentException("User not found"));
+
+        return PasswordHasher.checkPassword(rawPassword, user.getPasswordHash());
+    }
+
 
 
     public void deleteUser(Long id) {

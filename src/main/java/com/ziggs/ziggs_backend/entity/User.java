@@ -31,8 +31,9 @@ public class User {
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdAt;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "role", nullable = false, length = 50)
-    private String role;
+    private Role role = Role.USER;;
 
     @OneToMany(mappedBy = "user")
     private List<FeedbackTicket> feedbackTickets;
@@ -43,6 +44,11 @@ public class User {
     @PrePersist
     protected void onCreate() {
         this.createdAt = new Date();
+    }
+
+    public enum Role {
+        USER,
+        ADMIN
     }
 
 }
