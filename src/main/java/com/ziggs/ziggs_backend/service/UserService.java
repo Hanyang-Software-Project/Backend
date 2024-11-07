@@ -27,8 +27,15 @@ public class UserService {
     }
 
     public User saveUser(User user) {
+        if (userRepository.existsByEmail(user.getEmail())) {
+            throw new IllegalArgumentException("Email already exists.");
+        }
+        if (userRepository.existsByUsername(user.getUsername())) {
+            throw new IllegalArgumentException("Username already exists.");
+        }
         return userRepository.save(user);
     }
+
 
     public void deleteUser(Long id) {
         userRepository.deleteById(id);
