@@ -38,7 +38,6 @@ public class NotificationController {
     public ResponseEntity<Notification> updateNotification(@PathVariable Long id, @RequestBody Notification notificationDetails) {
         Optional<Notification> updatedNotification = notificationService.getNotificationById(id)
                 .map(notification -> {
-                    // Set updated properties here
                     return notificationService.saveNotification(notificationDetails);
                 });
         return updatedNotification.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
