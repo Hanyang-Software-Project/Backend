@@ -1,14 +1,14 @@
 package com.ziggs.ziggs_backend.entity;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.Date;
 
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "SoundData")
-@Getter
-@Setter
 public class SoundData {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

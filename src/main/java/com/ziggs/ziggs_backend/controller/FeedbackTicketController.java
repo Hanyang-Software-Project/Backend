@@ -38,7 +38,6 @@ public class FeedbackTicketController {
     public ResponseEntity<FeedbackTicket> updateFeedbackTicket(@PathVariable Long id, @RequestBody FeedbackTicket feedbackTicketDetails) {
         Optional<FeedbackTicket> updatedFeedbackTicket = feedbackTicketService.getFeedbackTicketById(id)
                 .map(ticket -> {
-                    // Set updated properties here
                     return feedbackTicketService.saveFeedbackTicket(feedbackTicketDetails);
                 });
         return updatedFeedbackTicket.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());

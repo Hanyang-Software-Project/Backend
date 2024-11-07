@@ -1,5 +1,6 @@
 package com.ziggs.ziggs_backend.controller;
 
+import com.ziggs.ziggs_backend.dto.UserDTO;
 import com.ziggs.ziggs_backend.entity.User;
 import com.ziggs.ziggs_backend.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,11 +23,21 @@ public class UserController {
         return userService.getAllUsers();
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/user/{id}")
     public ResponseEntity<User> getUserById(@PathVariable Long id) {
         Optional<User> user = userService.getUserById(id);
         return user.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
+
+    @GetMapping("/userDTO/{id}")
+    public ResponseEntity<UserDTO> getUserByIdDTO(@PathVariable Long id) {
+        Optional<User> user = userService.getUserById(id);
+        return user
+                .map(u -> new UserDTO(u.getUserId(), u.getUsername(), u.getEmail(), u.getCreatedAt()))
+                .map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
 
     @PostMapping
     public ResponseEntity<User> createUser(@RequestBody User user) {

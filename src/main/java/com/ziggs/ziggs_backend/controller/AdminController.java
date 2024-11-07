@@ -39,7 +39,6 @@ public class AdminController {
     public ResponseEntity<Admin> updateAdmin(@PathVariable Long id, @RequestBody Admin adminDetails) {
         Optional<Admin> updatedAdmin = adminService.getAdminById(id)
                 .map(admin -> {
-                    // Set updated properties here
                     return adminService.saveAdmin(adminDetails);
                 });
         return updatedAdmin.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
