@@ -24,8 +24,8 @@ public class User {
     @Column(name = "email", nullable = false, length = 255)
     private String email;
 
-    @Column(name = "password_hash", nullable = false, length = 255)
-    private String passwordHash;
+    @Column(name = "password", nullable = false, length = 255)
+    private String password;
 
     @Column(name = "created_at")
     @Temporal(TemporalType.TIMESTAMP)
