@@ -31,8 +31,8 @@ public class UserService {
             throw new IllegalArgumentException("Username already exists.");
         }
 
-        String hashedPassword = PasswordHasher.hashPassword(user.getPasswordHash());
-        user.setPasswordHash(hashedPassword);
+        String hashedPassword = PasswordHasher.hashPassword(user.getPassword());
+        user.setPassword(hashedPassword);
 
         return userRepository.save(user);
     }
@@ -41,7 +41,7 @@ public class UserService {
         User user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new IllegalArgumentException("User not found"));
 
-        return PasswordHasher.checkPassword(rawPassword, user.getPasswordHash());
+        return PasswordHasher.checkPassword(rawPassword, user.getPassword());
     }
 
 
