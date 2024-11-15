@@ -1,9 +1,0 @@
-services:
-  postgres:
-    image: 'postgres:latest'
-    environment:
-      - 'POSTGRES_DB=ziggs_db'
-      - 'POSTGRES_PASSWORD=ziggs'
-      - 'POSTGRES_USER=ziggs'
-    ports:
-      - '5444:5432'
