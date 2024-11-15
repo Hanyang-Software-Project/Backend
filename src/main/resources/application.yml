@@ -1,6 +1,6 @@
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5433/ziggs_db
+    url: jdbc:postgresql://localhost:5444/ziggs_db
     username: ziggs
     password: ziggs
     driver-class-name: org.postgresql.Driver
