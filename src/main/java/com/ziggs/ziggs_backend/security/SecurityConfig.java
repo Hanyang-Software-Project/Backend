@@ -20,7 +20,8 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
                         .requestMatchers(HttpMethod.POST, "/users").permitAll()  // Allow POST requests to /api/users without authentication
-                        .requestMatchers(HttpMethod.GET, "/users/userDTO/*").permitAll()  // Allow GET requests to /api/users/userDTO/{id} without authentication
+                        .requestMatchers(HttpMethod.GET, "/users/**").permitAll()  // Allow GET requests to /api/users/userDTO/{id} without authentication
+                        .requestMatchers(HttpMethod.DELETE, "/users/*").permitAll()
                         .anyRequest().authenticated()  // Require authentication for all other requests
                 )
                 .httpBasic(withDefaults());  // Enable HTTP Basic auth with defaults
