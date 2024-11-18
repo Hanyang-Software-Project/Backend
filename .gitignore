@@ -31,3 +31,5 @@ build/
 
 ### VS Code ###
 .vscode/
+
+src/main/resources/ziggs-7421a-firebase-adminsdk-2ivcm-8b8925d87b.json
