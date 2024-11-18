@@ -23,6 +23,11 @@ public class UserService {
         return userRepository.findById(id);
     }
 
+    public User findByEmail(String email) {
+        return userRepository.findByEmail(email)
+                .orElseThrow(() -> new IllegalArgumentException("User not found with email: " + email));
+    }
+
     public User saveUser(User user) {
         if (userRepository.existsByEmail(user.getEmail())) {
             throw new IllegalArgumentException("Email already exists.");
@@ -53,8 +58,9 @@ public class UserService {
     }
 
 
-
     public void deleteUser(Long id) {
         userRepository.deleteById(id);
     }
+
+
 }

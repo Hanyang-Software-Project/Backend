@@ -25,13 +25,13 @@ public class FirebaseAuthInterceptor implements HandlerInterceptor {
             } catch (Exception e) {
                 // Si le token est invalide, retourne une réponse 401
                 response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-                response.getWriter().write("Token invalide : " + e.getMessage());
+                response.getWriter().write("Invalid token : " + e.getMessage());
                 return false;
             }
         }
         // Si le token est absent ou incorrect, retourne une réponse 401
         response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-        response.getWriter().write("Token manquant ou invalide.");
+        response.getWriter().write("Missing token or invalid.");
         return false;
     }
 }
