@@ -44,6 +44,14 @@ public class UserService {
         return PasswordHasher.checkPassword(rawPassword, user.getPassword());
     }
 
+    public boolean isEmailTaken(String email) {
+        return userRepository.findByEmail(email).isPresent();
+    }
+
+    public boolean isUsernameTaken(String username) {
+        return userRepository.findByUsername(username).isPresent();
+    }
+
 
 
     public void deleteUser(Long id) {

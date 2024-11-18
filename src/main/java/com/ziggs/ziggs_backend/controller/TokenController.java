@@ -12,7 +12,7 @@ import java.util.Map;
 
 
 @RestController
-public class FirebaseTokenController {
+public class TokenController {
 
     @Autowired
     private UserRepository userRepository;

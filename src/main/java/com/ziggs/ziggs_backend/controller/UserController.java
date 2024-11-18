@@ -39,12 +39,19 @@ public class UserController {
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-    @PostMapping
-    public ResponseEntity<User> createUser(@Valid @RequestBody User user) {
+    @PostMapping("/create-user")
+    public ResponseEntity<?> createUser(@Valid @RequestBody User user) {
+        if (userService.isEmailTaken(user.getEmail())) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("L'email est déjà utilisé.");
+        }
+
+        if (userService.isUsernameTaken(user.getUsername())) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Le nom d'utilisateur est déjà utilisé.");
+        }
+
         User savedUser = userService.saveUser(user);
         return ResponseEntity.status(HttpStatus.CREATED).body(savedUser);
     }
-
 
 
     @PutMapping("/{id}")
