@@ -3,6 +3,7 @@ package com.ziggs.ziggs_backend.controller;
 import com.ziggs.ziggs_backend.dto.UserDTO;
 import com.ziggs.ziggs_backend.entity.User;
 import com.ziggs.ziggs_backend.service.UserService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -39,10 +40,11 @@ public class UserController {
     }
 
     @PostMapping
-    public ResponseEntity<User> createUser(@RequestBody User user) {
+    public ResponseEntity<User> createUser(@Valid @RequestBody User user) {
         User savedUser = userService.saveUser(user);
         return ResponseEntity.status(HttpStatus.CREATED).body(savedUser);
     }
+
 
 
     @PutMapping("/{id}")

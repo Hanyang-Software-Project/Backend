@@ -1,6 +1,7 @@
 package com.ziggs.ziggs_backend.entity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 
 import java.util.Date;
@@ -17,13 +18,16 @@ public class User {
     @Column(name = "user_id")
     private Long userId;
 
-    @Column(name = "username", length = 50)
+    @NotBlank(message = "Le nom d'utilisateur est obligatoire.")
+    @Column(name = "username", nullable = false, length = 50)
     private String username;
 
-    @Email
-    @Column(name = "email", nullable = false, length = 255)
+    @Email(message = "Email invalide.")
+    @NotBlank(message = "L'email est obligatoire.")
+    @Column(name = "email", nullable = false, unique = true)
     private String email;
 
+    @NotBlank(message = "Le mot de passe est obligatoire.")
     @Column(name = "password", nullable = false, length = 255)
     private String password;
 
