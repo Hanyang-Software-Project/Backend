@@ -39,8 +39,20 @@ public class UserService {
             throw new IllegalArgumentException("House cannot be null");
         }
 
-        House house = houseRepository.findByHouseName(user.getHouse().getHouseName());
+        // Vérification des doublons
+        if (isEmailTaken(user.getEmail())) {
+            throw new IllegalArgumentException("Email already taken");
+        }
 
+        if (isUsernameTaken(user.getUsername())) {
+            throw new IllegalArgumentException("Username already taken");
+        }
+
+        if (isPhoneTaken(user.getPhoneNumber())) {
+            throw new IllegalArgumentException("Phone number already taken");
+        }
+
+        House house = houseRepository.findByHouseName(user.getHouse().getHouseName());
         if (house == null) {
             house = new House();
             house.setHouseName(user.getHouse().getHouseName());
@@ -57,7 +69,6 @@ public class UserService {
         user.setPassword(PasswordHasher.hashPassword(user.getPassword()));
 
         userRepository.save(user);
-
         houseRepository.save(house);
 
         return user;

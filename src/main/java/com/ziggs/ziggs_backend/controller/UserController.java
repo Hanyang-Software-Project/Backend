@@ -41,22 +41,13 @@ public class UserController {
 
     @PostMapping("/create-user")
     public ResponseEntity<?> createUser(@Valid @RequestBody User user) {
-        if (userService.isEmailTaken(user.getEmail())) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Email already taken.");
+        try {
+            User savedUser = userService.createUser(user);
+            return ResponseEntity.status(HttpStatus.CREATED).body(savedUser);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
-
-        if (userService.isUsernameTaken(user.getUsername())) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Username already taken.");
-        }
-
-        if (userService.isPhoneTaken(user.getPhoneNumber())) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Phone number already taken.");
-        }
-
-        User savedUser = userService.createUser(user);
-        return ResponseEntity.status(HttpStatus.CREATED).body(savedUser);
     }
-
 
 
     @PutMapping("/{id}")
