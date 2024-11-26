@@ -1,11 +1,14 @@
 package com.ziggs.ziggs_backend.service;
 
+import com.ziggs.ziggs_backend.entity.House;
 import com.ziggs.ziggs_backend.entity.User;
+import com.ziggs.ziggs_backend.repository.HouseRepository;
 import com.ziggs.ziggs_backend.repository.UserRepository;
 import com.ziggs.ziggs_backend.security.PasswordHasher;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -14,6 +17,9 @@ public class UserService {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private HouseRepository houseRepository;
 
     public List<User> getAllUsers() {
         return userRepository.findAll();
@@ -28,19 +34,36 @@ public class UserService {
                 .orElseThrow(() -> new IllegalArgumentException("User not found with email: " + email));
     }
 
-    public User saveUser(User user) {
-        if (userRepository.existsByEmail(user.getEmail())) {
-            throw new IllegalArgumentException("Email already exists.");
-        }
-        if (userRepository.existsByUsername(user.getUsername())) {
-            throw new IllegalArgumentException("Username already exists.");
+    public User createUser(User user) {
+        if (user.getHouse() == null) {
+            throw new IllegalArgumentException("House cannot be null");
         }
 
-        String hashedPassword = PasswordHasher.hashPassword(user.getPassword());
-        user.setPassword(hashedPassword);
+        House house = houseRepository.findByHouseName(user.getHouse().getHouseName());
 
-        return userRepository.save(user);
+        if (house == null) {
+            house = new House();
+            house.setHouseName(user.getHouse().getHouseName());
+            house.setAddress(user.getHouse().getAddress());
+            house = houseRepository.save(house);
+        }
+
+        user.setHouse(house);
+
+        if (house.getUsers() == null) {
+            house.setUsers(new ArrayList<>());
+        }
+        house.getUsers().add(user);
+        user.setPassword(PasswordHasher.hashPassword(user.getPassword()));
+
+        userRepository.save(user);
+
+        houseRepository.save(house);
+
+        return user;
     }
+
+
 
     public boolean verifyUserCredentials(String email, String rawPassword) {
         User user = userRepository.findByEmail(email)
@@ -55,6 +78,10 @@ public class UserService {
 
     public boolean isUsernameTaken(String username) {
         return userRepository.findByUsername(username).isPresent();
+    }
+
+    public boolean isPhoneTaken(String phone) {
+        return userRepository.findByPhoneNumber(phone).isPresent();
     }
 
 

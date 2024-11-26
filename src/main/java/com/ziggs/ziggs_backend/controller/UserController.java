@@ -49,16 +49,21 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Username already taken.");
         }
 
-        User savedUser = userService.saveUser(user);
+        if (userService.isPhoneTaken(user.getPhoneNumber())) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Phone number already taken.");
+        }
+
+        User savedUser = userService.createUser(user);
         return ResponseEntity.status(HttpStatus.CREATED).body(savedUser);
     }
+
 
 
     @PutMapping("/{id}")
     public ResponseEntity<User> updateUser(@PathVariable Long id, @RequestBody User userDetails) {
         Optional<User> updatedUser = userService.getUserById(id)
                 .map(u -> {
-                    return userService.saveUser(userDetails);
+                    return userService.createUser(userDetails);
                 });
         return updatedUser.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
