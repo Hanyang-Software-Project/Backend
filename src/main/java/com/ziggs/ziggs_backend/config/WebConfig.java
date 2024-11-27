@@ -13,7 +13,6 @@ public class WebConfig implements WebMvcConfigurer {
         registry.addInterceptor(new FirebaseAuthInterceptor())
                 .addPathPatterns("/**")
                 .excludePathPatterns(
-                        "/generate-token",
                         "/login",
                         "/users/create-user"
                 );
