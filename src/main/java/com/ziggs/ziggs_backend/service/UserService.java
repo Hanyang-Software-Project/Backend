@@ -39,7 +39,6 @@ public class UserService {
             throw new IllegalArgumentException("House cannot be null");
         }
 
-        // Vérification des doublons
         if (isEmailTaken(user.getEmail())) {
             throw new IllegalArgumentException("Email already taken");
         }
