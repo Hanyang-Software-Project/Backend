@@ -15,8 +15,7 @@ public class WebConfig implements WebMvcConfigurer {
                 .excludePathPatterns(
                         "/generate-token",
                         "/login",
-                        "/users/create-user",
-                        "/house"
+                        "/users/create-user"
                 );
     }
 }

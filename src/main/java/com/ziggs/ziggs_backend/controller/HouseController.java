@@ -9,6 +9,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/house")
 @Validated
@@ -16,6 +18,11 @@ public class HouseController {
 
     @Autowired
     private HouseRepository houseRepository;
+
+    @GetMapping
+    public List<House> getAll() {
+        return houseRepository.findAll();
+    }
 
     @PostMapping
     public ResponseEntity<House> createHouse(@RequestBody @Valid House house) {
