@@ -50,7 +50,7 @@
             </exclusions>
         </dependency>
 
-        <!-- Validation API -->
+        <!-- API Validation -->
         <dependency>
             <groupId>jakarta.validation</groupId>
             <artifactId>jakarta.validation-api</artifactId>
