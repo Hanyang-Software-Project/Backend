@@ -30,6 +30,17 @@ public class DeviceController {
         return device.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
+    @GetMapping("/user/{userId}")
+    public ResponseEntity<List<Device>> getDevicesByUserId(@PathVariable Long userId) {
+        try {
+            List<Device> devices = deviceService.getDevicesByUserId(userId);
+            return ResponseEntity.ok(devices);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+        }
+    }
+
+
     @PostMapping
     public ResponseEntity<?> createDevice(@Valid @RequestBody DeviceDTO deviceDTO) {
         try {

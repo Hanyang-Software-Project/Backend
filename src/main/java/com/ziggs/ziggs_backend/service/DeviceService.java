@@ -28,6 +28,14 @@ public class DeviceService {
         return deviceRepository.findById(id);
     }
 
+    public List<Device> getDevicesByUserId(Long userId) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new IllegalArgumentException("User not found with ID: " + userId));
+        return deviceRepository.findByUser(user);
+    }
+
+
+
     public Device createDeviceFromDTO(DeviceDTO deviceDTO) {
         User user = userRepository.findById(deviceDTO.getUserId())
                 .orElseThrow(() -> new IllegalArgumentException("User not found with ID: " + deviceDTO.getUserId()));

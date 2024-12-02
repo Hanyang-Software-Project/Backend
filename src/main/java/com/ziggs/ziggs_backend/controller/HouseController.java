@@ -17,16 +17,26 @@ import java.util.List;
 public class HouseController {
 
     @Autowired
-    private HouseRepository houseRepository;
+    private HouseService houseService;
 
     @GetMapping
-    public List<House> getAll() {
-        return houseRepository.findAll();
+    public List<House> getAllHouses() {
+        return houseService.getAllHouses();
+    }
+
+    @GetMapping("/user/{userId}")
+    public ResponseEntity<List<House>> getHousesByUserId(@PathVariable Long userId) {
+        try {
+            List<House> houses = houseService.getHousesByUserId(userId);
+            return ResponseEntity.ok(houses);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(null);
+        }
     }
 
     @PostMapping
     public ResponseEntity<House> createHouse(@RequestBody @Valid House house) {
-        House savedHouse = houseRepository.save(house);
+        House savedHouse = houseService.createHouse(house);
         return ResponseEntity.ok(savedHouse);
     }
 }
