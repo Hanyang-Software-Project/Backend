@@ -1,6 +1,7 @@
 package com.ziggs.ziggs_backend.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
@@ -31,13 +32,14 @@ public class Device {
     private Date addedAt;
 
     @OneToMany(mappedBy = "device")
-    @JsonBackReference
+    @JsonManagedReference // Forward side of the relationship for SoundData
     private List<SoundData> soundData;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
-    @JsonBackReference
+    @JsonBackReference // Backward side of the relationship for User
     private User user;
+
 
     @PrePersist
     protected void onCreate() {

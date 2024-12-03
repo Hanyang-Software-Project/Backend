@@ -1,4 +1,5 @@
 package com.ziggs.ziggs_backend.entity;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.*;
@@ -26,7 +27,9 @@ public class SoundData {
 
     @ManyToOne
     @JoinColumn(name = "device_id", nullable = false)
+    @JsonBackReference // Backward side of the relationship for Device
     private Device device;
+
 
     @PrePersist
     protected void onCreate() {
