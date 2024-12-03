@@ -1,4 +1,5 @@
 package com.ziggs.ziggs_backend.entity;
+
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -16,20 +17,18 @@ public class Alert {
     private Long alertId;
 
     @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false)
-    private User user;
+    @JoinColumn(name = "sound_data_id")
+    private SoundData soundData;
+
+    @Column(name = "threatFlag")
+    private Boolean threatFlag;
 
     @Column(name = "timestamp")
     @Temporal(TemporalType.TIMESTAMP)
     private Date timestamp;
 
-    @ManyToOne
-    @JoinColumn(name = "sound_data_id")
-    private SoundData soundData;
-
     @PrePersist
     protected void onCreate() {
         this.timestamp = new Date();
     }
-
 }

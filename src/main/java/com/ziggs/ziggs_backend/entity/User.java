@@ -1,5 +1,6 @@
 package com.ziggs.ziggs_backend.entity;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -34,7 +35,6 @@ public class User {
     @Pattern(regexp = "^[+]?[0-9]{7,15}$", message = "Invalid phone number format.")
     private String phoneNumber;
 
-
     @NotBlank(message = "Password is mandatory.")
     @Column(name = "password", nullable = false, length = 255)
     private String password;
@@ -45,33 +45,26 @@ public class User {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "role", nullable = false, length = 50)
-    private Role role = Role.USER;;
+    private Role role = Role.USER;
 
     @OneToMany(mappedBy = "user")
     private List<FeedbackTicket> feedbackTickets;
 
     @OneToMany(mappedBy = "user")
-    private List<Alert> alerts;
-
-    @OneToMany(mappedBy = "user")
-    @JsonManagedReference
+    @JsonIgnore
     private List<Device> devices;
 
     @ManyToOne
     @JoinColumn(name = "house_id", nullable = false)
     private House house;
 
-
-
     @PrePersist
     protected void onCreate() {
         this.createdAt = new Date();
     }
 
-
     public enum Role {
         USER,
         ADMIN
     }
-
 }

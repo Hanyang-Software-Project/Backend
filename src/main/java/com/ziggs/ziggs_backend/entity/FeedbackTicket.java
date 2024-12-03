@@ -1,4 +1,5 @@
 package com.ziggs.ziggs_backend.entity;
+
 import jakarta.persistence.*;
 import lombok.*;
 

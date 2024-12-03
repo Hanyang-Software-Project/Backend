@@ -1,7 +1,6 @@
 package com.ziggs.ziggs_backend.entity;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
@@ -32,18 +31,16 @@ public class Device {
     private Date addedAt;
 
     @OneToMany(mappedBy = "device")
-    @JsonManagedReference
+    @JsonIgnore
     private List<SoundData> soundData;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
-    @JsonBackReference
+    @JsonIgnore
     private User user;
-
 
     @PrePersist
     protected void onCreate() {
         this.addedAt = new Date();
     }
-
 }

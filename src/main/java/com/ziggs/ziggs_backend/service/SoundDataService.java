@@ -1,8 +1,6 @@
 package com.ziggs.ziggs_backend.service;
 
-import com.ziggs.ziggs_backend.entity.Notification;
 import com.ziggs.ziggs_backend.entity.SoundData;
-import com.ziggs.ziggs_backend.repository.NotificationRepository;
 import com.ziggs.ziggs_backend.repository.SoundDataRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
