@@ -35,6 +35,8 @@ public class AuthController {
                 String customToken = FirebaseAuth.getInstance()
                         .createCustomToken(user.getUserId().toString(), claims);
 
+                customToken = "{\"token\": \"" + customToken + "\"}";
+
                 return ResponseEntity.ok(customToken);
             } else {
                 return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid credentials");
