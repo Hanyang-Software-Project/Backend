@@ -23,13 +23,13 @@ public class Alert {
     @Temporal(TemporalType.TIMESTAMP)
     private Date timestamp;
 
-    @Column(name = "alert_type", length = 100)
-    private String alertType;
-
-    @Column(name = "status", length = 50)
-    private String status;
-
     @ManyToOne
     @JoinColumn(name = "sound_data_id")
     private SoundData soundData;
+
+    @PrePersist
+    protected void onCreate() {
+        this.timestamp = new Date();
+    }
+
 }

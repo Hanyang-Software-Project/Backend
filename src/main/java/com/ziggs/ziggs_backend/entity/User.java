@@ -58,7 +58,6 @@ public class User {
     @JsonManagedReference
     private List<Device> devices;
 
-
     @ManyToOne
     @JoinColumn(name = "house_id", nullable = false)
     private House house;
