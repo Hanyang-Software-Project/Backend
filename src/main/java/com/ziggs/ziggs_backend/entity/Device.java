@@ -32,12 +32,12 @@ public class Device {
     private Date addedAt;
 
     @OneToMany(mappedBy = "device")
-    @JsonManagedReference // Forward side of the relationship for SoundData
+    @JsonManagedReference
     private List<SoundData> soundData;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
-    @JsonBackReference // Backward side of the relationship for User
+    @JsonBackReference
     private User user;
 
 

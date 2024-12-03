@@ -27,7 +27,7 @@ public class SoundData {
 
     @ManyToOne
     @JoinColumn(name = "device_id", nullable = false)
-    @JsonBackReference // Backward side of the relationship for Device
+    @JsonBackReference
     private Device device;
 
 
