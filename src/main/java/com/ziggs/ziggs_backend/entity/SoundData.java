@@ -2,7 +2,6 @@ package com.ziggs.ziggs_backend.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 
 import java.util.Date;
@@ -22,7 +21,6 @@ public class SoundData {
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdAt;
 
-    @NotBlank(message = "File path is mandatory.")
     @Column(name = "file_path", nullable = false, length = 255)
     private String filePath;
 

@@ -32,5 +32,8 @@ build/
 ### VS Code ###
 .vscode/
 
+
+### Credentials ###
 src/main/resources/ziggs-7421a-firebase-adminsdk-2ivcm-8b8925d87b.json
+src/main/resources/serviceAccountKey.json
 src/main/resources/application.yml
