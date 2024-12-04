@@ -52,7 +52,10 @@ public class DeviceService {
         return deviceRepository.findById(id)
                 .map(device -> {
                     device.setDeviceName(deviceDetails.getDeviceName());
-                    device.setUser(deviceDetails.getUser());
+
+                    User user = deviceDetails.getUser();
+                    if(user != null) device.setUser(user);
+
                     return deviceRepository.save(device);
                 })
                 .orElseThrow(() -> new IllegalArgumentException("Device not found with ID: " + id));
