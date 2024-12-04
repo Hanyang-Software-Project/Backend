@@ -16,8 +16,8 @@ public class Alert {
     @Column(name = "alert_id")
     private Long alertId;
 
-    @ManyToOne
-    @JoinColumn(name = "sound_data_id")
+    @OneToOne
+    @JoinColumn(name = "file_path", referencedColumnName = "file_path", unique = true)
     private SoundData soundData;
 
     @Column(name = "threatFlag")

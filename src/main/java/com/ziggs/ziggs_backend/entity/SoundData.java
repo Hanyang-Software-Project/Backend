@@ -21,7 +21,7 @@ public class SoundData {
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdAt;
 
-    @Column(name = "file_path", nullable = false, length = 255)
+    @Column(name = "file_path", nullable = false, length = 255, unique = true)
     private String filePath;
 
     @ManyToOne

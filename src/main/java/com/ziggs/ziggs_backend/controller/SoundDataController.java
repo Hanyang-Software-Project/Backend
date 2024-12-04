@@ -1,5 +1,6 @@
 package com.ziggs.ziggs_backend.controller;
 
+import com.ziggs.ziggs_backend.dto.SoundDataDTO;
 import com.ziggs.ziggs_backend.entity.SoundData;
 import com.ziggs.ziggs_backend.service.SoundDataService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,9 +30,9 @@ public class SoundDataController {
     }
 
     @PostMapping
-    public ResponseEntity<SoundData> createSoundData(@RequestBody SoundData soundData) {
-        SoundData savedSoundData = soundDataService.saveSoundData(soundData);
-        return ResponseEntity.status(HttpStatus.CREATED).body(savedSoundData);
+    public ResponseEntity<SoundData> createSoundData(@RequestBody SoundDataDTO soundDataDTO) {
+        SoundData createdSoundData = soundDataService.createSoundData(soundDataDTO);
+        return ResponseEntity.status(HttpStatus.CREATED).body(createdSoundData);
     }
 
     @PutMapping("/{id}")
