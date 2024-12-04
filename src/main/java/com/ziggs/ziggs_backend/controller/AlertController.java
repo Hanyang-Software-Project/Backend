@@ -8,14 +8,32 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/alerts")
+@RequestMapping("/alerts")
 public class AlertController {
 
     @Autowired
     private AlertService alertService;
+
+    @PostMapping
+    public ResponseEntity<String> createAlert(@RequestBody Map<String, String> payload) {
+        String filePath = payload.get("filePath");
+
+        if (filePath == null || filePath.isEmpty()) {
+            return ResponseEntity.badRequest().body("File path is required.");
+        }
+
+        try {
+            Alert alert = alertService.createAlert(filePath);
+            return new ResponseEntity<>(String.format("Alert created successfully with file path: %s", filePath), HttpStatus.CREATED);
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body("SoundData not found for the given file path.");
+        }
+    }
 
     @GetMapping
     public List<Alert> getAllAlerts() {
@@ -28,19 +46,23 @@ public class AlertController {
         return alert.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-    @PostMapping
-    public ResponseEntity<Alert> createAlert(@RequestBody Alert alert) {
-        Alert savedAlert = alertService.saveAlert(alert);
-        return ResponseEntity.status(HttpStatus.CREATED).body(savedAlert);
-    }
+
 
     @PutMapping("/{id}")
-    public ResponseEntity<Alert> updateAlert(@PathVariable Long id, @RequestBody Alert alertDetails) {
-        Optional<Alert> updatedAlert = alertService.getAlertById(id)
-                .map(alert -> {
-                    return alertService.saveAlert(alertDetails);
-                });
-        return updatedAlert.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+    public ResponseEntity<Alert> updateAlert(@PathVariable Long id, @RequestBody Map<String, Boolean> payload) {
+        Boolean threatFlag = payload.get("threatFlag");
+
+        if (threatFlag == null) {
+            return ResponseEntity.badRequest().body(null);
+        }
+
+        try {
+            Alert updatedAlert = alertService.updateThreatFlag(id, threatFlag);
+            return ResponseEntity.ok(updatedAlert);
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body(null);
+        }
     }
 
     @DeleteMapping("/{id}")
@@ -48,4 +70,5 @@ public class AlertController {
         alertService.deleteAlert(id);
         return ResponseEntity.noContent().build();
     }
+
 }
