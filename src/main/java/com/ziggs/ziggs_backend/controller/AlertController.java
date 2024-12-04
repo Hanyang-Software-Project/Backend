@@ -1,5 +1,6 @@
 package com.ziggs.ziggs_backend.controller;
 
+import com.ziggs.ziggs_backend.dto.AlertDTO;
 import com.ziggs.ziggs_backend.entity.Alert;
 import com.ziggs.ziggs_backend.service.AlertService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,24 @@ public class AlertController {
     @Autowired
     private AlertService alertService;
 
+
+    @GetMapping
+    public List<Alert> getAllAlerts() {
+        return alertService.getAllAlerts();
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Alert> getAlertById(@PathVariable Long id) {
+        Optional<Alert> alert = alertService.getAlertById(id);
+        return alert.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
+    @GetMapping("/user/{userId}")
+    public ResponseEntity<List<AlertDTO>> getAlertsByUserId(@PathVariable Long userId) {
+        List<AlertDTO> alerts = alertService.getAlertsByUserId(userId);
+        return ResponseEntity.ok(alerts);
+    }
+
     @PostMapping
     public ResponseEntity<String> createAlert(@RequestBody Map<String, String> payload) {
         String filePath = payload.get("filePath");
@@ -34,18 +53,6 @@ public class AlertController {
                     .body("SoundData not found for the given file path.");
         }
     }
-
-    @GetMapping
-    public List<Alert> getAllAlerts() {
-        return alertService.getAllAlerts();
-    }
-
-    @GetMapping("/{id}")
-    public ResponseEntity<Alert> getAlertById(@PathVariable Long id) {
-        Optional<Alert> alert = alertService.getAlertById(id);
-        return alert.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
-    }
-
 
 
     @PutMapping("/{id}")
