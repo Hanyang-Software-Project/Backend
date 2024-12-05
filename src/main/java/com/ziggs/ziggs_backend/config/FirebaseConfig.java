@@ -16,6 +16,7 @@ public class FirebaseConfig {
     @PostConstruct
     public void initialize() throws IOException {
         if (FirebaseApp.getApps().isEmpty()) {
+            // Load the service account key from classpath
             InputStream serviceAccount = getClass().getClassLoader().getResourceAsStream("serviceAccountKey.json");
 
             if (serviceAccount == null) {
@@ -30,3 +31,4 @@ public class FirebaseConfig {
         }
     }
 }
+
