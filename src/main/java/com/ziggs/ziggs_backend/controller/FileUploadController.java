@@ -1,6 +1,8 @@
 package com.ziggs.ziggs_backend.controller;
 
+import com.ziggs.ziggs_backend.dto.S3FileDTO;
 import com.ziggs.ziggs_backend.service.S3Service;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -16,16 +18,17 @@ public class FileUploadController {
     }
 
     @PostMapping("/upload")
-    public ResponseEntity<String> uploadFile(@RequestParam("file") MultipartFile file) {
+    public ResponseEntity<S3FileDTO> uploadFile(@RequestParam("file") MultipartFile file) {
         if (file.isEmpty()) {
-            return ResponseEntity.badRequest().body("No file selected");
+            return ResponseEntity.badRequest().body(new S3FileDTO("No file selected", null));
         }
 
         try {
-            String response = s3Service.uploadFile(file);
-            return ResponseEntity.ok(response);
+            S3FileDTO response = s3Service.uploadFile(file);
+            return ResponseEntity.ok().body(response);
         } catch (Exception e) {
-            return ResponseEntity.status(500).body("Failed to upload file: " + e.getMessage());
+            S3FileDTO res = new S3FileDTO("Failed to upload file: " + e.getMessage(), null);
+            return ResponseEntity.internalServerError().body(res);
         }
     }
 }
