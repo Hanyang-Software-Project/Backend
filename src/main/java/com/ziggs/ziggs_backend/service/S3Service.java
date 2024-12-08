@@ -2,6 +2,7 @@ package com.ziggs.ziggs_backend.service;
 
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.ObjectMetadata;
+import com.ziggs.ziggs_backend.dto.S3FileDTO;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -19,7 +20,7 @@ public class S3Service {
         this.bucketName = bucketName;
     }
 
-    public String uploadFile(MultipartFile file) throws IOException {
+    public S3FileDTO uploadFile(MultipartFile file) throws IOException {
         // Specify the folder name
         String folderName = "wav/";
 
@@ -34,6 +35,7 @@ public class S3Service {
         // Upload the file directly from InputStream
         amazonS3.putObject(bucketName, fileName, file.getInputStream(), metadata);
 
-        return "File uploaded successfully to folder '" + folderName + "': " + fileName;
+        return new S3FileDTO("OK", fileName);
+        //return "File uploaded successfully to folder '" + folderName + "': " + fileName;
     }
 }
