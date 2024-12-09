@@ -47,8 +47,6 @@ public class User {
     @Column(name = "role", nullable = false, length = 50)
     private Role role = Role.USER;
 
-    @OneToMany(mappedBy = "user")
-    private List<FeedbackTicket> feedbackTickets;
 
     @OneToMany(mappedBy = "user")
     @JsonIgnore
