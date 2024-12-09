@@ -72,8 +72,8 @@ amazon:
 1. **Clone the Repository**
 
   ```bash
-  git clone <repository_url>
-  cd <repository_name>
+  git clone [<repository_url>](https://github.com/Hanyang-Software-Project/Backend)
+  cd <Backend>
   ```
 
 
