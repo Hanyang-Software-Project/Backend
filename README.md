@@ -2,11 +2,11 @@
 
 This repository contains the backend for **ZIGGS**, an audio-based anomaly detection system designed to enhance home safety. The backend handles user data, processes audio anomaly alerts, and integrates with machine learning models and IoT devices. Built with **Spring Boot**, it connects to a **PostgreSQL** database hosted on **AWS RDS** and integrates **Firebase** for authentication and notifications.
 
-## 🚀 Running the Project Locally
+## Running the Project Locally
 
 The backend APIs are already hosted on an **AWS EC2** instance, so you can access them without running the project locally. However, if you'd like to run the backend locally for development or testing, follow the steps below.
 
-## 🛠️ Prerequisites
+## Prerequisites
 
 Before running the project locally, ensure you have the following:
 
@@ -19,9 +19,9 @@ Before running the project locally, ensure you have the following:
 
 Both files are located in the `src/main/resources` directory.
 
-📧 **Contact us** via the email provided on the main page to obtain these files and credentials.
+**Contact us** via the email provided on the main page to obtain these files and credentials.
 
-## 📋 Configuration
+## Configuration
 
 ### Firebase
 
@@ -67,7 +67,7 @@ amazon:
   region: <your-aws-region>
   ```
 
-## 🖥️ Steps to Run
+## Steps to Run
 
 1. **Clone the Repository**
 
