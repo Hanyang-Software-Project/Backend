@@ -100,7 +100,7 @@ amazon:
   - You can use tools like **Postman** or **curl** to test the endpoints.
 
 
-## 📧 Need Help?
+## Need Help?
 
 If you encounter any issues or have questions, feel free to **contact us** via the email provided on the main page.
 
